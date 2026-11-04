@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Website Development Request | Build. Grow. Online.</title>
+  <style>
+    :root {
+      --primary: #ffc928;
+      --primary-dark: #e5aa00;
+      --primary-light: #fff5cf;
+      --navy: #061a2b;
+      --navy-soft: #102b42;
+      --text: #172331;
+      --text-secondary: #5f6b76;
+      --border: #d7dee5;
+      --bg: #eef2f5;
+      --white: #ffffff;
+      --error: #b3261e;
+      --success: #137333;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Google Sans', Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 24px 16px 48px;
+    }
+
+    .form-container {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* Header Card */
+    .header-card {
+      background: var(--white);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      margin-bottom: 12px;
+      border-top: 10px solid var(--primary);
+    }
+
+    .header-card h1 {
+      font-size: 32px;
+      font-weight: 400;
+      padding: 24px 24px 8px;
+      color: var(--text);
+    }
+
+    .header-meta {
+      padding: 0 24px 16px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .header-meta a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .required-note {
+      padding: 12px 24px 20px;
+      font-size: 14px;
+      color: var(--error);
+      border-top: 1px solid var(--border);
+    }
+
+    /* Question Cards */
+    .question-card {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      transition: box-shadow 0.2s;
+    }
+
+    .question-card:focus-within {
+      box-shadow: 0 0 0 2px var(--primary);
+    }
+
+    .question-label {
+      display: block;
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .required {
+      color: var(--error);
+      margin-left: 2px;
+    }
+
+    .example {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    /* Inputs */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px 0;
+      font-size: 16px;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-bottom: 2px solid var(--primary);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%235f6368'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0 center;
+      padding-right: 32px;
+    }
+
+    /* Radio & Checkbox */
+    .option-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .option input[type="radio"],
+    .option input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: #e5aa00;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .other-input {
+      display: none;
+      margin-top: 8px;
+      margin-left: 32px;
+    }
+
+    .other-input.visible {
+      display: block;
+    }
+
+    /* File Upload */
+    .file-upload {
+      margin-top: 12px;
+    }
+
+    .file-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 14px;
+      color: var(--primary);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .file-label:hover {
+      background: var(--primary-light);
+    }
+
+    .file-label svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    #logo-file {
+      display: none;
+    }
+
+    .file-name {
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* Buttons */
+    .form-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+      padding: 0 4px;
+    }
+
+    .btn-submit {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 15px;
+      font-weight: 500;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-submit:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-submit:disabled {
+      background: #bdbdbd;
+      cursor: not-allowed;
+    }
+
+    .btn-clear {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 8px 12px;
+    }
+
+    .btn-clear:hover {
+      background: var(--primary-light);
+      border-radius: 4px;
+    }
+
+    /* Status messages */
+    .status {
+      display: none;
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 15px;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status.success {
+      display: flex;
+      background: #e6f4ea;
+      color: var(--success);
+      border: 1px solid #ceead6;
+    }
+
+    .status.error {
+      display: flex;
+      background: #fce8e6;
+      color: var(--error);
+      border: 1px solid #f5c6c2;
+    }
+
+    .page-info {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* Loading spinner */
+    .spinner {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin-right: 8px;
+    }
+
+    .btn-submit.loading .spinner {
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 480px) {
+      .header-card h1 {
+        font-size: 26px;
+      }
+      .question-card {
+        padding: 20px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <!-- Status messages -->
+    <div id="status" class="status"></div>
+
+    <form id="websiteForm" action="https://formsubmit.co/cazmirtech@gmail.com" method="POST" enctype="multipart/form-data">
+      <!-- FormSubmit configuration -->
+      <input type="hidden" name="_subject" value="New Website Request Form Submission">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" style="display:none">
+
+      <!-- Header -->
+      <div class="header-card">
+        <h1>Website Request Form</h1>
+        <div class="header-meta">
+          Tell us about your business and website needs.
+        </div>
+        <div class="required-note">* Indicates required question</div>
+      </div>
+
+      <!-- Email -->
+      <div class="question-card">
+        <label class="question-label" for="email">Email <span class="required">*</span></label>
+        <span class="example">&gt; Example: abcd@gmail.com</span>
+        <input type="email" id="email" name="email" required placeholder="Your email address" />
+      </div>
+
+      <!-- Business Name -->
+      <div class="question-card">
+        <label class="question-label" for="business_name">Business Name <span class="required">*</span></label>
+        <span class="example">&gt; Example: Jenna Fashion Hub</span>
+        <input type="text" id="business_name" name="business_name" required placeholder="Your answer" />
+      </div>
+
+      <!-- WhatsApp Number -->
+      <div class="question-card">
+        <label class="question-label" for="whatsapp">WhatsApp Number <span class="required">*</span></label>
+        <span class="example">&gt; Example: 0801 234 5678</span>
+        <input type="tel" id="whatsapp" name="whatsapp_number" required placeholder="Your answer" />
+      </div>
+
+      <!-- Website Package -->
+      <div class="question-card">
+        <label class="question-label">Which website development package are you interested in? <span class="required">*</span></label>
+        <span class="example">Choose the package that best matches your needs. Select “Not sure yet” if you'd like guidance.</span>
+        <div class="option-group">
+          <label class="option">
+            <input type="radio" name="website_package" value="Static Website - ₦19,000" required />
+            Static Website – ₦19,000
+          </label>
+          <label class="option">
+            <input type="radio" name="website_package" value="Dynamic Website - ₦150,000" />
+            Dynamic Website – ₦150,000
+          </label>
+          <label class="option">
+            <input type="radio" name="website_package" value="Not sure yet - I need guidance" />
+            Not sure yet – I need guidance.
+          </label>
+        </div>
+      </div>
+
+      <!-- Website Type -->
+      <div class="question-card">
+        <label class="question-label" for="website_type">What type of website do you need? <span class="required">*</span></label>
+        <select id="website_type" name="website_type" required>
+          <option value="" disabled selected>Choose</option>
+          <option value="E-commerce Store">E-commerce Store</option>
+          <option value="Business Website">Business Website</option>
+          <option value="Portfolio Website">Portfolio Website</option>
+          <option value="Blog">Blog</option>
+          <option value="Booking Website">Booking Website</option>
+          <option value="School Website">School Website</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <!-- Existing Website -->
+      <div class="question-card">
+        <label class="question-label" for="existing_website">Do you already have an existing website? <span class="required">*</span></label>
+        <select id="existing_website" name="existing_website" required>
+          <option value="" disabled selected>Choose</option>
+          <option value="Yes, I want to redesign it">Yes, I want to redesign it</option>
+          <option value="No, I need a new website">No, I need a new website</option>
+        </select>
+      </div>
+
+      <!-- Domain Name -->
+      <div class="question-card">
+        <label class="question-label" for="domain_status">Do you already have a domain name? <span class="required">*</span></label>
+        <select id="domain_status" name="domain_status" required>
+          <option value="" disabled selected>Choose</option>
+          <option value="Yes">Yes</option>
+          <option value="No, I need one">No, I need one</option>
+          <option value="I don't know what a domain name is">I don't know what a domain name is</option>
+        </select>
+      </div>
+
+      <!-- Business Description -->
+      <div class="question-card">
+        <label class="question-label" for="description">Briefly describe your business. <span class="required">*</span></label>
+        <span class="example">&gt; Example: We sell fabrics, shoes and handbags both wholesale and retail.</span>
+        <textarea id="description" name="business_description" required placeholder="Your answer" rows="3"></textarea>
+      </div>
+
+      <!-- Has Logo -->
+      <div class="question-card">
+        <label class="question-label">Do you already have a logo? <span class="required">*</span></label>
+        <div class="option-group">
+          <label class="option">
+            <input type="radio" name="has_logo" value="Yes" required />
+            Yes
+          </label>
+          <label class="option">
+            <input type="radio" name="has_logo" value="No" />
+            No
+          </label>
+        </div>
+      </div>
+
+      <!-- Logo Upload -->
+      <div class="question-card">
+        <label class="question-label" for="logo-file">Provide Your Logo (If available)</label>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;">
+          Upload one image file if available. Maximum file size: 10 MB.
+        </p>
+        <div class="file-upload">
+          <label class="file-label" for="logo-file">
+            <svg viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
+            Add file
+          </label>
+          <input type="file" id="logo-file" name="logo" accept="image/*" />
+          <div id="file-name" class="file-name"></div>
+        </div>
+      </div>
+
+      <!-- Completion Timeline -->
+      <div class="question-card">
+        <label class="question-label">When would you like your website completed? <span class="required">*</span></label>
+        <div class="option-group">
+          <label class="option">
+            <input type="radio" name="completion_timeline" value="As soon as possible" required />
+            As soon as possible.
+          </label>
+          <label class="option">
+            <input type="radio" name="completion_timeline" value="Within one week" />
+            Within one week.
+          </label>
+          <label class="option">
+            <input type="radio" name="completion_timeline" value="Within two weeks" />
+            Within two weeks.
+          </label>
+          <label class="option">
+            <input type="radio" name="completion_timeline" value="Within one month" />
+            Within one month.
+          </label>
+          <label class="option">
+            <input type="radio" name="completion_timeline" value="No specific deadline" />
+            No specific deadline.
+          </label>
+        </div>
+      </div>
+
+      <!-- Anything else -->
+      <div class="question-card">
+        <label class="question-label" for="extra">Is there anything else you'd like us to know? (Optional)</label>
+        <textarea id="extra" name="additional_info" placeholder="Your answer" rows="3"></textarea>
+      </div>
+
+      <!-- How did you hear -->
+      <div class="question-card">
+        <label class="question-label">How did you hear about us? <span class="required">*</span></label>
+        <div class="option-group">
+          <label class="option">
+            <input type="radio" name="referral_source" value="Facebook" required />
+            Facebook
+          </label>
+          <label class="option">
+            <input type="radio" name="referral_source" value="Instagram" />
+            Instagram
+          </label>
+          <label class="option">
+            <input type="radio" name="referral_source" value="WhatsApp" />
+            WhatsApp
+          </label>
+          <label class="option">
+            <input type="radio" name="referral_source" value="Google" />
+            Google
+          </label>
+          <label class="option">
+            <input type="radio" name="referral_source" value="Friend/Referral" />
+            Friend/Referral
+          </label>
+          <label class="option">
+            <input type="radio" name="referral_source" value="Other" id="other-radio" />
+            Other:
+          </label>
+          <div id="other-input-wrapper" class="other-input">
+            <input type="text" id="other-source" name="referral_source_other" placeholder="Please specify" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Arrangement -->
+      <div class="question-card">
+        <label class="question-label">Our payment arrangement <span class="required">*</span></label>
+        <p style="font-size:14px;color:var(--text-secondary);margin-bottom:12px;">
+          We will review your submitted requirements and build your website. When it is ready, we will contact you on WhatsApp for you to review it. You will pay after the service has been completed. No upfront payment is required.
+        </p>
+        <label class="option">
+          <input type="checkbox" name="payment_arrangement_acknowledgement" value="I understand that payment is after service completion" required />
+          I understand and agree to the payment-after-service arrangement. <span class="required">*</span>
+        </label>
+      </div>
+
+      <!-- Privacy Notice -->
+      <div class="question-card">
+        <label class="question-label">Privacy notice</label>
+        <p style="font-size:14px;color:var(--text-secondary);">
+          The contact details and project information you provide will be used to understand your website requirements, prepare your website, and contact you on WhatsApp when it is ready for your review. Your details will not intentionally be used for unrelated marketing.
+        </p>
+        <label class="option" style="margin-top:16px;">
+          <input type="checkbox" name="privacy_consent" value="I have read and understood the privacy notice" required />
+          I have read and understood the privacy notice. <span class="required">*</span>
+        </label>
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button type="submit" class="btn-submit" id="submitBtn">
+          <span class="spinner"></span>
+          Submit
+        </button>
+        <button type="button" class="btn-clear" id="clearBtn">Clear form</button>
+      </div>
+    </form>
+
+    <div class="page-info">All questions are on one page.</div>
+    <div class="footer-note">
+      Never submit passwords through this form.<br>
+      This form is powered by FormSubmit.co
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('websiteForm');
+    const statusEl = document.getElementById('status');
+    const submitBtn = document.getElementById('submitBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const fileInput = document.getElementById('logo-file');
+    const fileNameEl = document.getElementById('file-name');
+    const otherRadio = document.getElementById('other-radio');
+    const otherInputWrapper = document.getElementById('other-input-wrapper');
+    const otherSourceInput = document.getElementById('other-source');
+
+    // Show/hide "Other" text field
+    document.querySelectorAll('input[name="referral_source"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        if (otherRadio.checked) {
+          otherInputWrapper.classList.add('visible');
+          otherSourceInput.required = true;
+        } else {
+          otherInputWrapper.classList.remove('visible');
+          otherSourceInput.required = false;
+          otherSourceInput.value = '';
+        }
+      });
+    });
+
+    // File name display
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        if (file.size > 10 * 1024 * 1024) {
+          alert('File is too large. Maximum size is 10 MB.');
+          fileInput.value = '';
+          fileNameEl.textContent = '';
+          return;
+        }
+        fileNameEl.textContent = `Selected: ${file.name}`;
+      } else {
+        fileNameEl.textContent = '';
+      }
+    });
+
+    // Clear form
+    clearBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to clear the form?')) {
+        form.reset();
+        fileNameEl.textContent = '';
+        otherInputWrapper.classList.remove('visible');
+        otherSourceInput.required = false;
+        statusEl.className = 'status';
+        statusEl.style.display = 'none';
+      }
+    });
+
+    // Submit directly to FormSubmit using multipart/form-data.
+    // This native POST is the documented method for forms with file uploads.
+    form.addEventListener('submit', (e) => {
+      if (!form.reportValidity()) {
+        e.preventDefault();
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+      submitBtn.lastChild.textContent = 'Submitting...';
+    });
+  </script>
+</body>
+</html>
