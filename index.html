@@ -339,11 +339,12 @@
     <!-- Status messages -->
     <div id="status" class="status"></div>
 
-    <form id="websiteForm" action="https://formsubmit.co/cazmirtech@gmail.com" method="POST" enctype="multipart/form-data">
-      <!-- FormSubmit configuration -->
-      <input type="hidden" name="_subject" value="New Website Request Form Submission">
-      <input type="hidden" name="_template" value="table">
-      <input type="text" name="_honey" style="display:none">
+    <form id="websiteForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+      <!-- Web3Forms configuration -->
+      <input type="hidden" name="access_key" value="27118e0d-b4a9-446c-bb6d-d06a842ff5ac">
+      <input type="hidden" name="subject" value="New Website Request Form Submission">
+      <input type="hidden" name="from_name" value="Website Request Form">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
 
       <!-- Header -->
       <div class="header-card">
@@ -573,7 +574,7 @@
     <div class="page-info">All questions are on one page.</div>
     <div class="footer-note">
       Never submit passwords through this form.<br>
-      This form is powered by FormSubmit.co
+      This form is powered by Web3Forms
     </div>
   </div>
 
@@ -630,17 +631,42 @@
       }
     });
 
-    // Submit directly to FormSubmit using multipart/form-data.
-    // This native POST is the documented method for forms with file uploads.
-    form.addEventListener('submit', (e) => {
-      if (!form.reportValidity()) {
-        e.preventDefault();
-        return;
-      }
+    // Submit to Web3Forms with fetch so the user stays on the page
+    function showStatus(type, msg) {
+      statusEl.className = 'status ' + type;
+      statusEl.textContent = msg;
+      statusEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
 
       submitBtn.disabled = true;
       submitBtn.classList.add('loading');
       submitBtn.lastChild.textContent = 'Submitting...';
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(form)
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.success) throw new Error(data.message || 'Something went wrong.');
+
+        form.reset();
+        fileNameEl.textContent = '';
+        otherInputWrapper.classList.remove('visible');
+        otherSourceInput.required = false;
+        showStatus('success', 'Thank you! Your request has been submitted. We will contact you on WhatsApp.');
+      } catch (err) {
+        showStatus('error', (err.message || 'Submission failed.') + ' Please try again.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+        submitBtn.lastChild.textContent = 'Submit';
+      }
     });
   </script>
 </body>
