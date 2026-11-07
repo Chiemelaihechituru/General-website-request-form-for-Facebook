@@ -339,7 +339,7 @@
     <!-- Status messages -->
     <div id="status" class="status"></div>
 
-    <form id="websiteForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+    <form id="websiteForm" action="https://api.web3forms.com/submit" method="POST">
       <!-- Web3Forms configuration -->
       <input type="hidden" name="access_key" value="27118e0d-b4a9-446c-bb6d-d06a842ff5ac">
       <input type="hidden" name="subject" value="New Website Request Form Submission">
@@ -442,6 +442,9 @@
       <!-- Has Logo -->
       <div class="question-card">
         <label class="question-label">Do you already have a logo? <span class="required">*</span></label>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;">
+          No worries if you don't have one yet. It's completely fine, and we can help you with that.
+        </p>
         <div class="option-group">
           <label class="option">
             <input type="radio" name="has_logo" value="Yes" required />
@@ -451,22 +454,6 @@
             <input type="radio" name="has_logo" value="No" />
             No
           </label>
-        </div>
-      </div>
-
-      <!-- Logo Upload -->
-      <div class="question-card">
-        <label class="question-label" for="logo-file">Provide Your Logo (If available)</label>
-        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;">
-          Upload one image file if available. Maximum file size: 10 MB.
-        </p>
-        <div class="file-upload">
-          <label class="file-label" for="logo-file">
-            <svg viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
-            Add file
-          </label>
-          <input type="file" id="logo-file" name="logo" accept="image/*" />
-          <div id="file-name" class="file-name"></div>
         </div>
       </div>
 
@@ -583,8 +570,6 @@
     const statusEl = document.getElementById('status');
     const submitBtn = document.getElementById('submitBtn');
     const clearBtn = document.getElementById('clearBtn');
-    const fileInput = document.getElementById('logo-file');
-    const fileNameEl = document.getElementById('file-name');
     const otherRadio = document.getElementById('other-radio');
     const otherInputWrapper = document.getElementById('other-input-wrapper');
     const otherSourceInput = document.getElementById('other-source');
@@ -603,27 +588,10 @@
       });
     });
 
-    // File name display
-    fileInput.addEventListener('change', () => {
-      if (fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        if (file.size > 10 * 1024 * 1024) {
-          alert('File is too large. Maximum size is 10 MB.');
-          fileInput.value = '';
-          fileNameEl.textContent = '';
-          return;
-        }
-        fileNameEl.textContent = `Selected: ${file.name}`;
-      } else {
-        fileNameEl.textContent = '';
-      }
-    });
-
     // Clear form
     clearBtn.addEventListener('click', () => {
       if (confirm('Are you sure you want to clear the form?')) {
         form.reset();
-        fileNameEl.textContent = '';
         otherInputWrapper.classList.remove('visible');
         otherSourceInput.required = false;
         statusEl.className = 'status';
@@ -656,7 +624,6 @@
         if (!res.ok || !data.success) throw new Error(data.message || 'Something went wrong.');
 
         form.reset();
-        fileNameEl.textContent = '';
         otherInputWrapper.classList.remove('visible');
         otherSourceInput.required = false;
         showStatus('success', 'Thank you! Your request has been submitted. We will contact you on WhatsApp.');
