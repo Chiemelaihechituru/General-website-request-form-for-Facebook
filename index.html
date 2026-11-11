@@ -413,23 +413,36 @@
 
       <!-- Existing Website -->
       <div class="question-card">
-        <label class="question-label" for="existing_website">Do you already have an existing website? <span class="required">*</span></label>
-        <select id="existing_website" name="existing_website" required>
-          <option value="" disabled selected>Choose</option>
-          <option value="Yes, I want to redesign it">Yes, I want to redesign it</option>
-          <option value="No, I need a new website">No, I need a new website</option>
-        </select>
+        <label class="question-label">Do you already have an existing website? <span class="required">*</span></label>
+        <div class="option-group">
+          <label class="option">
+            <input type="radio" name="existing_website" value="Yes, I want to redesign it" required />
+            Yes, I want to redesign it
+          </label>
+          <label class="option">
+            <input type="radio" name="existing_website" value="No, I need a new website" />
+            No, I need a new website
+          </label>
+        </div>
       </div>
 
       <!-- Domain Name -->
       <div class="question-card">
-        <label class="question-label" for="domain_status">Do you already have a domain name? <span class="required">*</span></label>
-        <select id="domain_status" name="domain_status" required>
-          <option value="" disabled selected>Choose</option>
-          <option value="Yes">Yes</option>
-          <option value="No, I need one">No, I need one</option>
-          <option value="I don't know what a domain name is">I don't know what a domain name is</option>
-        </select>
+        <label class="question-label">Do you already have a domain name? <span class="required">*</span></label>
+        <div class="option-group">
+          <label class="option">
+            <input type="radio" name="domain_status" value="Yes" required />
+            Yes
+          </label>
+          <label class="option">
+            <input type="radio" name="domain_status" value="No, I need one" />
+            No, I need one
+          </label>
+          <label class="option">
+            <input type="radio" name="domain_status" value="I don't know what a domain name is" />
+            I don't know what a domain name is
+          </label>
+        </div>
       </div>
 
       <!-- Business Description -->
