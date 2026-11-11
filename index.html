@@ -401,8 +401,8 @@
         <label class="question-label" for="website_type">What type of website do you need? <span class="required">*</span></label>
         <select id="website_type" name="website_type" required>
           <option value="" disabled selected>Choose</option>
-          <option value="E-commerce Store">E-commerce Store</option>
           <option value="Business Website">Business Website</option>
+          <option value="E-commerce Store">E-commerce Store</option>
           <option value="Portfolio Website">Portfolio Website</option>
           <option value="Blog">Blog</option>
           <option value="Booking Website">Booking Website</option>
@@ -524,30 +524,6 @@
         </div>
       </div>
 
-      <!-- Payment Arrangement -->
-      <div class="question-card">
-        <label class="question-label">Our payment arrangement <span class="required">*</span></label>
-        <p style="font-size:14px;color:var(--text-secondary);margin-bottom:12px;">
-          We will review your submitted requirements and build your website. When it is ready, we will contact you on WhatsApp for you to review it. You will pay after the service has been completed. No upfront payment is required.
-        </p>
-        <label class="option">
-          <input type="checkbox" name="payment_arrangement_acknowledgement" value="I understand that payment is after service completion" required />
-          I understand and agree to the payment-after-service arrangement. <span class="required">*</span>
-        </label>
-      </div>
-
-      <!-- Privacy Notice -->
-      <div class="question-card">
-        <label class="question-label">Privacy notice</label>
-        <p style="font-size:14px;color:var(--text-secondary);">
-          The contact details and project information you provide will be used to understand your website requirements, prepare your website, and contact you on WhatsApp when it is ready for your review. Your details will not intentionally be used for unrelated marketing.
-        </p>
-        <label class="option" style="margin-top:16px;">
-          <input type="checkbox" name="privacy_consent" value="I have read and understood the privacy notice" required />
-          I have read and understood the privacy notice. <span class="required">*</span>
-        </label>
-      </div>
-
       <!-- Actions -->
       <div class="form-actions">
         <button type="submit" class="btn-submit" id="submitBtn">
@@ -626,7 +602,7 @@
         form.reset();
         otherInputWrapper.classList.remove('visible');
         otherSourceInput.required = false;
-        showStatus('success', 'Thank you! Your request has been submitted. We will contact you on WhatsApp.');
+        showStatus('success', 'Thank you! Your request has been received. We will review it, start working on your website, and get back to you soon.');
       } catch (err) {
         showStatus('error', (err.message || 'Submission failed.') + ' Please try again.');
       } finally {
